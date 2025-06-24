@@ -3,43 +3,57 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Generator Prompt Video ASMR</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <title>ASMR Prompt Generator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Poppins', sans-serif;
     }
 
     body {
-      background: #0f0f0f;
-      color: #f5f5f5;
-      padding: 2rem;
+      background: #f2f4f8;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       min-height: 100vh;
+      padding: 2rem;
+    }
+
+    .container {
+      background: #fff;
+      padding: 2rem;
+      max-width: 600px;
+      width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     }
 
     h1 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
       font-weight: 600;
+      color: #2a2a2a;
     }
 
     p {
       margin-bottom: 1.5rem;
-      opacity: 0.8;
+      color: #555;
+      font-size: 1rem;
     }
 
     textarea {
       width: 100%;
-      min-height: 120px;
-      background: #1a1a1a;
-      color: #fff;
-      border: 1px solid #333;
-      border-radius: 8px;
+      height: 150px;
       padding: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 12px;
       resize: vertical;
+      font-size: 1rem;
+      background: #fafafa;
       margin-bottom: 1rem;
     }
 
@@ -50,55 +64,60 @@
     }
 
     button {
-      background: #1e88e5;
+      flex: 1;
+      background: #007BFF;
       border: none;
-      padding: 0.7rem 1.5rem;
+      padding: 0.75rem 1rem;
       color: white;
-      border-radius: 8px;
+      font-size: 1rem;
+      border-radius: 10px;
       font-weight: 600;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: background 0.3s ease, transform 0.2s;
     }
 
     button:hover {
-      background: #1565c0;
+      background: #0056b3;
+      transform: translateY(-2px);
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 480px) {
       h1 {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
       }
       button {
-        width: 100%;
+        flex: 100%;
       }
     }
   </style>
 </head>
 <body>
-  <h1>Generator Prompt Video ASMR</h1>
-  <p>Masukkan atau hasilkan prompt AI untuk membuat video ASMR yang unik.</p>
+  <div class="container">
+    <h1>ASMR Prompt Generator</h1>
+    <p>Gunakan generator ini untuk membuat prompt video ASMR yang menenangkan dan unik.</p>
 
-  <textarea id="promptBox" placeholder="Tulis atau tempel prompt di sini..."></textarea>
+    <textarea id="promptBox" placeholder="Tulis atau hasilkan prompt di sini..."></textarea>
 
-  <div class="button-group">
-    <button onclick="copyPrompt()">Salin</button>
-    <button onclick="resetPrompt()">Reset</button>
-    <button onclick="randomPrompt()">Acak</button>
+    <div class="button-group">
+      <button onclick="copyPrompt()">Salin</button>
+      <button onclick="resetPrompt()">Reset</button>
+      <button onclick="randomPrompt()">Acak</button>
+    </div>
   </div>
 
   <script>
     const promptBox = document.getElementById('promptBox');
     const prompts = [
-      "Suara rintik hujan di atap rumah kayu di tengah hutan",
-      "Bisikan lembut membacakan puisi tentang malam",
-      "Suara gesekan kertas saat menulis dengan pena di meja kayu",
-      "Suara menyisir rambut perlahan di pagi hari",
+      "Bisikan halus membacakan surat cinta malam hari",
+      "Suara garpu menyentuh piring keramik secara perlahan",
+      "Suara kuku mengetuk permukaan kayu berulang",
+      "Suara lipatan kertas surat cinta yang dibuka pelan",
     ];
 
     function copyPrompt() {
       promptBox.select();
       document.execCommand('copy');
-      alert('Prompt disalin!');
+      alert('Prompt disalin ke clipboard!');
     }
 
     function resetPrompt() {
