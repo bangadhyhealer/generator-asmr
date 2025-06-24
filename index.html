@@ -1,303 +1,113 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>ASMR Video Prompt Generator</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:700,400&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Generator Prompt Video ASMR</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; }
-    body {
-      background: linear-gradient(135deg, #191a2e 0%, #27374D 100%);
-      color: #f8fafc;
-      font-family: 'Montserrat', Arial, sans-serif;
-      min-height: 100vh;
+    * {
       margin: 0;
       padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
     }
-    .container {
-      background: rgba(23, 30, 49, 0.95);
-      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.30);
-      border-radius: 18px;
-      padding: 36px 28px 30px 28px;
-      margin-top: 48px;
-      max-width: 470px;
-      width: 97%;
+
+    body {
+      background: #0f0f0f;
+      color: #f5f5f5;
+      padding: 2rem;
+      min-height: 100vh;
     }
+
     h1 {
-      font-size: 2.1rem;
-      font-weight: 700;
-      text-align: center;
-      margin-top: 0;
-      margin-bottom: 28px;
-      letter-spacing: 1px;
-      color: #00c6a2;
-      text-shadow: 0 2px 16px rgba(0,198,162,0.11);
-    }
-    label {
-      display: block;
-      margin-top: 16px;
-      margin-bottom: 5px;
+      font-size: 2rem;
+      margin-bottom: 1rem;
       font-weight: 600;
-      color: #c2e9e0;
-      letter-spacing: .5px;
-      font-size: 1rem;
     }
-    select, input, textarea {
-      width: 100%;
-      padding: 11px 12px;
-      border-radius: 7px;
-      border: 1px solid #24304a;
-      background: #22283a;
-      color: #eff6fa;
-      font-size: 1rem;
-      transition: border .2s;
-      margin-bottom: 2px;
-      outline: none;
-      font-family: inherit;
+
+    p {
+      margin-bottom: 1.5rem;
+      opacity: 0.8;
     }
-    select:focus, input:focus, textarea:focus {
-      border-color: #00c6a2;
-    }
+
     textarea {
-      min-height: 110px;
-      max-height: 240px;
+      width: 100%;
+      min-height: 120px;
+      background: #1a1a1a;
+      color: #fff;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 1rem;
       resize: vertical;
-      margin-top: 10px;
-      font-size: 1rem;
+      margin-bottom: 1rem;
     }
+
     .button-group {
       display: flex;
-      gap: 10px;
-      margin-top: 18px;
+      flex-wrap: wrap;
+      gap: 1rem;
     }
-    .button-group button {
-      flex: 1 1 0;
-      font-size: 1rem;
-      padding: 12px 0;
+
+    button {
+      background: #1e88e5;
       border: none;
-      border-radius: 7px;
-      background: linear-gradient(90deg, #00c6a2 0%, #00c6c6 100%);
-      color: #fff;
-      font-weight: 700;
-      letter-spacing: .7px;
+      padding: 0.7rem 1.5rem;
+      color: white;
+      border-radius: 8px;
+      font-weight: 600;
       cursor: pointer;
-      box-shadow: 0 2px 10px 0 rgba(0,198,162,.08);
-      transition: background .18s, transform .15s;
+      transition: background 0.3s ease;
     }
-    .button-group button:hover {
-      background: linear-gradient(90deg, #00e6c6 0%, #00c6c6 100%);
-      transform: translateY(-2px) scale(1.02);
+
+    button:hover {
+      background: #1565c0;
     }
-    .footer {
-      margin: 40px 0 15px 0;
-      color: #99aabb;
-      font-size: .97em;
-      text-align: center;
-      opacity: .7;
-    }
-    @media (max-width:600px) {
-      .container { margin-top: 12vw; padding: 20px 2vw 20px 2vw; }
-      h1 { font-size: 1.19rem; }
-      .footer { font-size: .85em; }
-      .button-group { flex-direction: column; gap: 8px; }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+      button {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>🔊 ASMR Video Prompt Generator</h1>
+  <h1>Generator Prompt Video ASMR</h1>
+  <p>Masukkan atau hasilkan prompt AI untuk membuat video ASMR yang unik.</p>
 
-    <label for="language">Bahasa / Language:</label>
-    <select id="language">
-      <option value="id">Bahasa Indonesia</option>
-      <option value="en">English</option>
-    </select>
+  <textarea id="promptBox" placeholder="Tulis atau tempel prompt di sini..."></textarea>
 
-    <label for="theme">Tema Objek:</label>
-    <select id="theme" onchange="applyThemePreset()">
-      <option value="">-- Pilih Tema --</option>
-      <option value="planet">🌍 Planet</option>
-      <option value="fruit">🍎 Buah</option>
-      <option value="vegetal">🌱 Tumbuhan</option>
-      <option value="mineral">💎 Mineral</option>
-      <option value="misc">✨ Lainnya</option>
-    </select>
-
-    <label for="preset">Preset Khusus:</label>
-    <select id="preset" onchange="applyPreset()">
-      <option value="">-- Pilih Preset --</option>
-      <optgroup label="Planet" id="group-planet" style="display:none">
-        <option value="earth">Planet Bumi</option>
-        <option value="moon">Bulan</option>
-        <option value="mars">Mars</option>
-        <option value="jupiter">Jupiter</option>
-        <option value="venus">Venus</option>
-      </optgroup>
-      <optgroup label="Buah" id="group-fruit" style="display:none">
-        <option value="apple">Apel</option>
-        <option value="orange">Jeruk</option>
-        <option value="watermelon">Semangka</option>
-      </optgroup>
-      <optgroup label="Tumbuhan" id="group-vegetal" style="display:none">
-        <option value="bamboo">Bambu</option>
-        <option value="cactus">Kaktus</option>
-      </optgroup>
-      <optgroup label="Mineral" id="group-mineral" style="display:none">
-        <option value="geode">Geode Kristal</option>
-        <option value="obsidian">Batu Obsidian</option>
-        <option value="coral">Karang Laut</option>
-      </optgroup>
-      <optgroup label="Lainnya" id="group-misc" style="display:none">
-        <option value="bone">Tulang Replika</option>
-        <option value="knife">Pisau Dapur</option>
-        <option value="cuttingboard">Talenan Kayu</option>
-        <option value="hologram">Hologram Sphere</option>
-        <option value="chip">Mikrochip 3D</option>
-        <option value="random">[Acak / Random]</option>
-      </optgroup>
-    </select>
-
-    <label for="object">Objek (nama bebas):</label>
-    <input type="text" id="object" placeholder="Contoh: Planet Bumi / Apel / Geode / Tulang Replika">
-
-    <label for="duration">Durasi Video:</label>
-    <select id="duration">
-      <option value="5 detik">5 detik</option>
-      <option value="6 detik">6 detik</option>
-      <option value="8 detik">8 detik</option>
-      <option value="10 detik">10 detik</option>
-      <option value="15 detik">15 detik</option>
-    </select>
-
-    <label for="camera">Posisi Kamera:</label>
-    <select id="camera">
-      <option value="top-down view">Top-down view</option>
-      <option value="side close-up">Side close-up</option>
-      <option value="rotating macro">Rotating macro</option>
-      <option value="steady macro">Steady macro</option>
-    </select>
-
-    <label for="style">Gaya Visual:</label>
-    <select id="style">
-      <option value="photorealistic">Fotorealistik</option>
-      <option value="surreal and dreamy">Surealis dan dreamy</option>
-      <option value="clean studio">Studio bersih</option>
-      <option value="retro film">Retro film</option>
-      <option value="cyberpunk">Cyberpunk</option>
-    </select>
-
-    <label for="texture">Tekstur Objek:</label>
-    <select id="texture">
-      <option value="crunchy juicy">🍎 Renyah & basah</option>
-      <option value="soft jelly">🍮 Lembut & kenyal</option>
-      <option value="dense fibrous">🌳 Padat & berserat</option>
-      <option value="smooth glassy">💎 Halus & mengkilap</option>
-      <option value="rough porous">🪨 Kasar & berpori</option>
-    </select>
-
-    <label for="ambience">Suara Latar / Ambience:</label>
-    <select id="ambience">
-      <option value="silent room">🔇 Ruangan hening</option>
-      <option value="soft wind">🍃 Angin lembut</option>
-      <option value="distant rain">🌧️ Hujan jauh</option>
-      <option value="city night">🌆 Kota malam</option>
-    </select>
-
-    <label for="result">Hasil Prompt:</label>
-    <textarea id="result" readonly></textarea>
-    <div class="button-group">
-      <button onclick="generatePrompt()">🎬 Buat Prompt</button>
-      <button onclick="copyPrompt()">📋 Salin</button>
-      <button onclick="resetForm()">🔁 Reset</button>
-      <button onclick="downloadPrompt()">📥 Unduh Prompt</button>
-    </div>
+  <div class="button-group">
+    <button onclick="copyPrompt()">Salin</button>
+    <button onclick="resetPrompt()">Reset</button>
+    <button onclick="randomPrompt()">Acak</button>
   </div>
-  <div class="footer">
-    &copy; 2025 bangadhyhealer &mdash; <a href="https://github.com/bangadhyhealer/generator-asmr" target="_blank" style="color:#7cf6e7">GitHub</a>
-  </div>
+
   <script>
-    function applyThemePreset() {
-      const theme = document.getElementById("theme").value;
-      const preset = document.getElementById("preset");
-      const groups = preset.querySelectorAll("optgroup");
-      groups.forEach(g => g.style.display = "none");
-      if (theme) {
-        const activeGroup = document.getElementById("group-" + theme);
-        if (activeGroup) activeGroup.style.display = "block";
-      }
-      preset.value = "";
-    }
-
-    function applyPreset() {
-      const preset = document.getElementById("preset").value;
-      const object = document.getElementById("object");
-      const presets = {
-        earth: "Planet Bumi", moon: "Bulan", mars: "Mars",
-        jupiter: "Jupiter", venus: "Venus", apple: "Apel",
-        orange: "Jeruk", watermelon: "Semangka", bamboo: "Bambu",
-        cactus: "Kaktus", geode: "Geode Kristal", obsidian: "Batu Obsidian",
-        coral: "Karang Laut", bone: "Tulang Replika", knife: "Pisau Dapur",
-        cuttingboard: "Talenan Kayu", hologram: "Hologram Sphere", chip: "Mikrochip 3D"
-      };
-      if (preset === "random") {
-        const keys = Object.keys(presets);
-        const randomKey = keys[Math.floor(Math.random() * keys.length)];
-        object.value = presets[randomKey];
-      } else if (presets[preset]) {
-        object.value = presets[preset];
-      }
-    }
-
-    function generatePrompt() {
-      const lang = document.getElementById("language").value;
-      const object = document.getElementById("object").value || "[Objek]";
-      const duration = document.getElementById("duration").value;
-      const camera = document.getElementById("camera").value;
-      const style = document.getElementById("style").value;
-      const texture = document.getElementById("texture").value;
-      const ambience = document.getElementById("ambience").value;
-
-      let prompt = "";
-      if (lang === "id") {
-        prompt =
-          `Extreme close-up, makro shot super detail dan gerakan lambat. Sebuah pisau koki mengiris ${object} bertekstur ${texture}. ` +
-          `Posisi kamera dari sudut ${camera}. Objek diletakkan di atas talenan kayu rustic dengan cahaya sinematik. ` +
-          `Gaya visual: ${style}. Suara latar: ${ambience}. Durasi video: ${duration}.`;
-      } else {
-        prompt =
-          `Extreme close-up, macro slow motion. A polished chef's knife slices through a ${texture} ${object} from a ${camera} perspective. ` +
-          `The object rests on a rustic wooden board under cinematic backlight. ` +
-          `Visual style: ${style}. Background sound: ${ambience}. Video duration: ${duration}.`;
-      }
-      document.getElementById("result").value = prompt;
-    }
+    const promptBox = document.getElementById('promptBox');
+    const prompts = [
+      "Suara rintik hujan di atap rumah kayu di tengah hutan",
+      "Bisikan lembut membacakan puisi tentang malam",
+      "Suara gesekan kertas saat menulis dengan pena di meja kayu",
+      "Suara menyisir rambut perlahan di pagi hari",
+    ];
 
     function copyPrompt() {
-      const text = document.getElementById("result").value;
-      if (!text) { alert("Tidak ada prompt untuk disalin."); return; }
-      navigator.clipboard.writeText(text).then(() => alert("Prompt disalin!"));
+      promptBox.select();
+      document.execCommand('copy');
+      alert('Prompt disalin!');
     }
 
-    function resetForm() {
-      document.querySelectorAll("select, input, textarea").forEach(el => el.value = "");
-      applyThemePreset();
-      document.getElementById("result").value = "";
+    function resetPrompt() {
+      promptBox.value = '';
     }
 
-    function downloadPrompt() {
-      const text = document.getElementById("result").value;
-      if (!text) { alert("Tidak ada prompt untuk diunduh."); return; }
-      const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
-      const link = document.createElement("a");
-      link.href = URL.createObjectURL(blob);
-      link.download = "prompt-veo3.txt";
-      document.body.appendChild(link);
-      link.click();
-      setTimeout(() => document.body.removeChild(link), 50);
+    function randomPrompt() {
+      const random = prompts[Math.floor(Math.random() * prompts.length)];
+      promptBox.value = random;
     }
   </script>
 </body>
