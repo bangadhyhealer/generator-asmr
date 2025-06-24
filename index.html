@@ -1,133 +1,136 @@
-<!DOCTYPE html>
-<html lang="id">
+<!DOCTYPE html><html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ASMR Prompt Generator</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>ASMR Video Prompt Generator</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
-    }
-
     body {
-      background: #f2f4f8;
-      color: #333;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 2rem;
+      background: #111;
+      color: #eee;
+      font-family: sans-serif;
+      max-width: 720px;
+      margin: auto;
+      padding: 30px;
     }
-
-    .container {
-      background: #fff;
-      padding: 2rem;
-      max-width: 600px;
+    label {
+      display: block;
+      margin-top: 15px;
+    }
+    select, input, textarea, button {
       width: 100%;
-      border-radius: 16px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      padding: 10px;
+      margin-top: 5px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
     }
-
-    h1 {
-      font-size: 1.8rem;
-      margin-bottom: 0.5rem;
-      font-weight: 600;
-      color: #2a2a2a;
-    }
-
-    p {
-      margin-bottom: 1.5rem;
-      color: #555;
-      font-size: 1rem;
-    }
-
-    textarea {
-      width: 100%;
-      height: 150px;
-      padding: 1rem;
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      resize: vertical;
-      font-size: 1rem;
-      background: #fafafa;
-      margin-bottom: 1rem;
-    }
-
-    .button-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-
     button {
-      flex: 1;
-      background: #007BFF;
-      border: none;
-      padding: 0.75rem 1rem;
+      background: #00aa88;
       color: white;
-      font-size: 1rem;
-      border-radius: 10px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.3s ease, transform 0.2s;
+      border: none;
+      margin-top: 15px;
     }
-
-    button:hover {
-      background: #0056b3;
-      transform: translateY(-2px);
+    textarea {
+      height: 220px;
+      margin-top: 15px;
+      font-family: monospace;
     }
-
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 1.4rem;
-      }
-      button {
-        flex: 100%;
-      }
+    .button-group button {
+      width: 32%;
+      margin-right: 2%;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>ASMR Prompt Generator</h1>
-    <p>Gunakan generator ini untuk membuat prompt video ASMR yang menenangkan dan unik.</p>
+  <h1>🔊 ASMR Video Prompt Generator</h1><label for="language">Bahasa / Language:</label> <select id="language"> <option value="id">Bahasa Indonesia</option> <option value="en">English</option> </select>
 
-    <textarea id="promptBox" placeholder="Tulis atau hasilkan prompt di sini..."></textarea>
+<label for="theme">Tema Objek:</label> <select id="theme" onchange="applyThemePreset()"> <option value="">-- Pilih Tema --</option> <option value="planet">🌍 Planet</option> <option value="fruit">🍎 Buah</option> <option value="plant">🌿 Tumbuhan</option> <option value="stone">🪨 Batu / Mineral</option> <option value="animal">🐾 Hewan / Organik</option> <option value="tool">🔧 Alat Dapur</option> <option value="tech">💻 Barang Digital / Teknologi</option> <option value="custom">✨ Custom (bebas)</option> </select>
 
-    <div class="button-group">
-      <button onclick="copyPrompt()">Salin</button>
-      <button onclick="resetPrompt()">Reset</button>
-      <button onclick="randomPrompt()">Acak</button>
-    </div>
-  </div>
+<label for="preset">Preset Khusus:</label> <select id="preset" onchange="applyPreset()"> <option value="">-- Pilih Preset --</option> <optgroup label="Planet" id="group-planet"> <option value="earth">Planet Bumi</option> <option value="moon">Bulan</option> <option value="mars">Mars</option> <option value="jupiter">Jupiter</option> <option value="venus">Venus</option> <option value="random">Acak</option> </optgroup> <optgroup label="Buah" id="group-fruit"> <option value="apple">Apel</option> <option value="orange">Jeruk</option> <option value="watermelon">Semangka</option> </optgroup> <optgroup label="Tumbuhan" id="group-plant"> <option value="bamboo">Bambu</option> <option value="cactus">Kaktus</option> </optgroup> <optgroup label="Batu" id="group-stone"> <option value="geode">Geode Kristal</option> <option value="obsidian">Batu Obsidian</option> </optgroup> <optgroup label="Hewan" id="group-animal"> <option value="coral">Karang Laut</option> <option value="bone">Tulang Replika</option> </optgroup> <optgroup label="Alat Dapur" id="group-tool"> <option value="knife">Pisau Dapur</option> <option value="cuttingboard">Talenan Kayu</option> </optgroup> <optgroup label="Teknologi" id="group-tech"> <option value="hologram">Hologram Sphere</option> <option value="chip">Mikrochip 3D</option> </optgroup> </select>
 
-  <script>
-    const promptBox = document.getElementById('promptBox');
-    const prompts = [
-      "Bisikan halus membacakan surat cinta malam hari",
-      "Suara garpu menyentuh piring keramik secara perlahan",
-      "Suara kuku mengetuk permukaan kayu berulang",
-      "Suara lipatan kertas surat cinta yang dibuka pelan",
-    ];
+<label for="object">Objek (nama bebas):</label> <input type="text" id="object" placeholder="Contoh: Planet Bumi / Apel / Geode / Tulang Replika">
+
+<label for="duration">Durasi Video:</label> <select id="duration"> <option value="5 detik">5 detik</option> <option value="6 detik">6 detik</option> <option value="8 detik">8 detik</option> </select>
+
+<label for="camera">Posisi Kamera:</label> <select id="camera"> <option value="top-down view">Top-down view</option> <option value="side close-up">Side close-up</option> <option value="rotating macro">Rotating macro</option> <option value="ultra macro front">Ultra macro front</option> <option value="slow pan lateral">Slow pan lateral</option> <option value="low angle cinematic">Low angle cinematic</option> <option value="overhead zoom">Overhead zoom-in</option> </select>
+
+<label for="style">Gaya Visual:</label> <select id="style"> <option value="photorealistic">Fotorealistik</option> <option value="surreal and dreamy">Surealis dan dreamy</option> <option value="clean studio minimal">Studio bersih minimal</option> <option value="hyper-detailed cinematic">Sinematik sangat detail</option> </select>
+
+<label for="texture">Tekstur Objek:</label> <select id="texture"> <option value="crunchy juicy">🍎 Renyah & basah</option> <option value="soft jelly">🍮 Lembut & kenyal</option> <option value="dense crystal">🧊 Padat & mengkristal</option> <option value="dry fibrous">🪵 Kering & berserat</option> <option value="organic squish">🧠 Organik & kenyal</option> <option value="hard brittle">🪨 Keras & rapuh</option> </select>
+
+<label for="ambience">Suara Latar / Ambience:</label> <select id="ambience"> <option value="silent room">🔇 Ruangan hening</option> <option value="soft wind">🍃 Angin lembut</option> <option value="space hum">🌌 Dengungan luar angkasa</option> <option value="underwater echo">🌊 Gema bawah air</option> <option value="kitchen prep">🔪 Dapur realistis</option> <option value="gentle water drip">💧 Tetes air lembut</option> <option value="cosmic rumbles">🪐 Gemuruh kosmis</option> <option value="forest breeze">🌲 Alam terbuka</option> <option value="cool room vent">🧊 Pendinginan ruangan</option> <option value="micro vibrations">🔬 Suara mikroskopik</option> <option value="soft digital hum">💻 Elektronik lembut</option> </select>
+
+<label for="result">Hasil Prompt:</label>
+
+  <textarea id="result" readonly></textarea>  <div class="button-group">
+    <button onclick="generatePrompt()">🎬 Buat Prompt</button>
+    <button onclick="copyPrompt()">📋 Salin</button>
+    <button onclick="resetForm()">🔁 Reset</button>
+    <button onclick="downloadPrompt()">📥 Unduh Prompt</button>
+  </div>  <script>
+    function applyThemePreset() {
+      const theme = document.getElementById("theme").value;
+      const preset = document.getElementById("preset");
+      const groups = preset.querySelectorAll("optgroup");
+      groups.forEach(g => g.style.display = "none");
+      if (theme) {
+        const activeGroup = document.getElementById("group-" + theme);
+        if (activeGroup) activeGroup.style.display = "block";
+      }
+      preset.value = "";
+    }
+
+    function applyPreset() {
+      const preset = document.getElementById("preset").value;
+      const object = document.getElementById("object");
+      const presets = {
+        earth: "Planet Bumi", moon: "Bulan", mars: "Mars",
+        jupiter: "Jupiter", venus: "Venus", apple: "Apel",
+        orange: "Jeruk", watermelon: "Semangka", bamboo: "Bambu",
+        cactus: "Kaktus", geode: "Geode Kristal", obsidian: "Batu Obsidian",
+        coral: "Karang Laut", bone: "Tulang Replika", knife: "Pisau Dapur",
+        cuttingboard: "Talenan Kayu", hologram: "Hologram Sphere", chip: "Mikrochip 3D"
+      };
+      if (preset === "random") {
+        const keys = Object.keys(presets);
+        const randomKey = keys[Math.floor(Math.random() * keys.length)];
+        object.value = presets[randomKey];
+      } else if (presets[preset]) {
+        object.value = presets[preset];
+      }
+    }
+
+    function generatePrompt() {
+      const lang = document.getElementById("language").value;
+      const object = document.getElementById("object").value;
+      const duration = document.getElementById("duration").value;
+      const camera = document.getElementById("camera").value;
+      const style = document.getElementById("style").value;
+      const texture = document.getElementById("texture").value;
+      const ambience = document.getElementById("ambience").value;
+
+      const prompt = lang === "id" ?
+        `Extreme close-up, makro shot super detail dan gerakan lambat. Sebuah pisau koki mengiris ${object} bertekstur ${texture}. Posisi kamera dari sudut ${camera}. Objek diletakkan di atas talenan kayu rustic, diterangi sinar latar sinematik untuk menonjolkan detail bagian dalam. Gaya visual ${style}, ambience suara latar berupa ${ambience}. Durasi video ${duration}. Efek sinematik dan sangat memuaskan secara visual dan audio.` :
+        `Extreme close-up, macro slow motion. A polished chef's knife slices through a ${texture} ${object} from a ${camera} perspective. The object rests on a rustic wooden board under cinematic backlight revealing inner structures. Visual style is ${style}, with ambient sound of ${ambience}. Duration: ${duration}. Hyper-detailed, photorealistic, and satisfying.`;
+      document.getElementById("result").value = prompt;
+    }
 
     function copyPrompt() {
-      promptBox.select();
-      document.execCommand('copy');
-      alert('Prompt disalin ke clipboard!');
+      const text = document.getElementById("result").value;
+      navigator.clipboard.writeText(text).then(() => alert("Prompt disalin!"));
     }
 
-    function resetPrompt() {
-      promptBox.value = '';
+    function resetForm() {
+      document.querySelectorAll("select, input, textarea").forEach(el => el.value = "");
+      applyThemePreset();
     }
 
-    function randomPrompt() {
-      const random = prompts[Math.floor(Math.random() * prompts.length)];
-      promptBox.value = random;
+    function downloadPrompt() {
+      const text = document.getElementById("result").value;
+      const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "prompt-veo3.txt";
+      link.click();
     }
-  </script>
-</body>
+  </script></body>
 </html>
